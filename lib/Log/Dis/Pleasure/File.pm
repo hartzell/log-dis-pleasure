@@ -4,7 +4,8 @@ package Log::Dis::Pleasure::File;
 use namespace::autoclean;
 use Moo;
 
-use Log::Dis::Patchy::Helpers qw(prepend_timestamp_callback);
+use Log::Dis::Patchy::Helpers qw(append_newline_callback
+    prepend_timestamp_callback);
 use MooX::Types::MooseLike::Base qw(Str);
 
 sub _build_ldo_name         {'logfile'}
@@ -37,9 +38,10 @@ around _build_ldo_init_args => sub {
     my ( $orig, $self ) = ( shift, shift );
     my $args = $self->$orig(@_);
 
-    $args->{mode}      = 'append';
-    $args->{filename}  = $self->log_file;
-    $args->{callbacks} = [ prepend_timestamp_callback() ];
+    $args->{mode}     = 'append';
+    $args->{filename} = $self->log_file;
+    $args->{callbacks}
+        = [ prepend_timestamp_callback(), append_newline_callback() ];
 
     return $args;
 };
