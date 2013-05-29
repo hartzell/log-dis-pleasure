@@ -10,13 +10,22 @@ use Moo;
 with qw(Log::Dis::Patchy);
 
 use Log::Dis::Patchy::Helpers qw(prepend_pid_callback);
+use MooX::StrictConstructor;
 use MooX::Types::MooseLike::Base qw(AnyOf Bool Str Undef);
 
-has to_self   => ( is => 'ro', isa => Bool, default => 0 );
-has to_screen => ( is => 'ro', isa => Bool, default => 1 );
-has to_file   => ( is => 'ro', isa => Bool, default => 0 );
-has log_file  => ( is => 'ro', isa => Str, );
-has log_path  => ( is => 'ro', isa => Str, );
+has to_self =>
+    ( is => 'rw', isa => Bool, default => 0, trigger => \&_reset_dispatcher );
+has to_screen =>
+    ( is => 'rw', isa => Bool, default => 1, trigger => \&_reset_dispatcher );
+has to_file =>
+    ( is => 'rw', isa => Bool, default => 0, trigger => \&_reset_dispatcher );
+has log_file => ( is => 'rw', isa => Str, trigger => \&_reset_dispatcher );
+has log_path => ( is => 'rw', isa => Str, trigger => \&_reset_dispatcher );
+
+sub _reset_dispatcher {
+    my $self = shift;
+    $self->_clear_dispatcher();
+}
 
 has log_pid => ( is => 'ro', isa => Bool, default => 1 );
 
