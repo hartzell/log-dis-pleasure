@@ -1,5 +1,7 @@
 package Log::Dis::Pleasure;
 
+# ABSTRACT: Make logging a Pleasure.
+
 use namespace::autoclean;
 use Moo;
 
@@ -56,7 +58,7 @@ sub env_value {
     return;
 }
 
-sub _build__proxy_package { 'Log::Dis::Pleasure::Proxy' }
+sub _build__proxy_package {'Log::Dis::Pleasure::Proxy'}
 
 sub new_tester {
     my ( $class, $arg ) = @_;
