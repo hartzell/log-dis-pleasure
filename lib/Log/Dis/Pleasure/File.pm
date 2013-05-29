@@ -23,7 +23,7 @@ sub _build_log_file {
         || $self->_patchy->env_value('PATH')
         || File::Spec->tmpdir;
     my $filename = $self->_patchy->log_file
-        || sprintf( '%s.%04u%02u%02u',
+        || sprintf( '%s.%04u-%02u-%02u',
         $self->_patchy->ident,
         ( (localtime)[5] + 1900 ),
         sprintf( '%02d', (localtime)[4] + 1 ),
